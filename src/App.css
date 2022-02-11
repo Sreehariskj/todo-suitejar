@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* -- LoginLeftSection -- */
+
+.login-container {
+  width: 100v;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.logo {
+  position: absolute;
+  left: 6.75%;
+  right: 90.5%;
+  top: 7.81%;
+  bottom: 85.77%;
+  /* background-color: red; */
+}
+.login-form {
+  /* background-color: red; */
+  width: 70%;
+  height: 50%;
+  align-self: flex-end;
+}
+.google-btn {
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+}
+.google-img {
+  background: #ffffff;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+.google-text {
+  font-size: 18px;
+}
+/* for small device */
+
+@media (max-width: 770px) {
+  .login-form {
+    align-self: center;
+  }
+}
