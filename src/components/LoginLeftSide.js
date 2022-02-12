@@ -14,7 +14,7 @@ const LoginLeftSide = () => {
     SignInWithGoogle()
       .then((result) => {
         console.log(result);
-        navigate("/home");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
