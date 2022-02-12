@@ -3,8 +3,23 @@ import React from "react";
 import google from "../assets/img/google.png";
 import { Button, Container, Image } from "react-bootstrap";
 import Logo from "./Logo";
+import { SignInWithGoogle } from "../Firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 const LoginLeftSide = () => {
+  const navigate = useNavigate();
+
+  // google signInBtn function
+  const googleSignIn = () => {
+    SignInWithGoogle()
+      .then((result) => {
+        console.log(result);
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <Container>
       <Logo />
@@ -20,7 +35,11 @@ const LoginLeftSide = () => {
                 feugiat vitae faucibus nibh dolor dui.
               </p>
             </div>
-            <Button variant="primary" className="w-100 my-4">
+            <Button
+              variant="primary"
+              className="w-100 my-4"
+              onClick={googleSignIn}
+            >
               <div className="google-btn">
                 <Image src={google} className="google-img"></Image>
                 <span className="google-text">Sign in using Google</span>
