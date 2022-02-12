@@ -7,30 +7,23 @@ body {
 /* -- LoginLeftSection -- */
 
 .login-container {
-  width: 100v;
   height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-end;
+  /* background-color: yellow; */
 }
-.logo {
-  position: absolute;
-  left: 6.75%;
-  right: 90.5%;
-  top: 7.81%;
-  bottom: 85.77%;
-  /* background-color: red; */
-}
+
 .login-form {
-  /* background-color: red; */
   width: 70%;
   height: 50%;
-  align-self: flex-end;
+  padding: 1rem;
+  /* background-color: red; */
 }
 .google-btn {
-  /* background-color: red; */
   display: flex;
   align-items: center;
+  /* background-color: red; */
 }
 .google-img {
   background: #ffffff;
@@ -43,7 +36,7 @@ body {
 /* for small device */
 
 @media (max-width: 770px) {
-  .login-form {
-    align-self: center;
+  .login-container {
+    justify-content: center;
   }
 }
