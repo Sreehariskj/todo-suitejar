@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import google from "../assets/img/google.png";
 import { Button, Container, Image } from "react-bootstrap";
 import Logo from "./Logo";
-import { SignInWithGoogle } from "../Firebase/firebase";
+import { auth, SignInWithGoogle } from "../Firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const LoginLeftSide = () => {
   const navigate = useNavigate();
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    // console.log(user)
+
+    // function redirect to home if user
+    if (user) navigate("/");
+  }, [user, navigate]);
 
   // google signInBtn function
   const googleSignIn = () => {
     SignInWithGoogle()
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         navigate("/");
       })
       .catch((error) => {
