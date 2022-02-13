@@ -5,10 +5,13 @@ import { Search } from "@material-ui/icons/";
 import { db } from "../Firebase/firebase";
 import { useAuthContext } from "../store/AuthContext";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import { useTodoContext } from "../store/TodoContext";
 
 const TodoList = () => {
-  const [tasks, setTasks] = useState([]);
+  const { tasks, setTasks } = useTodoContext();
   const { userId } = useAuthContext();
+  const [search, setSearch] = useState();
+  // const [filteredTodo, setFilteredTodo] = useState();
   useEffect(() => {
     // console.log("todo list", userId);
 
@@ -22,8 +25,22 @@ const TodoList = () => {
         }))
       )
     );
+
     // console.log('todo :',tasks);
-  }, [userId]);
+  }, [userId, setTasks]);
+
+  // -- function to search task by title & description --
+  const searchTodo = () => {
+    if (search) {
+      setTasks(
+        tasks.filter(
+          (task) =>
+            task.data.title.toLowerCase().includes(search) ||
+            task.data.description.toLowerCase().includes(search)
+        )
+      );
+    }
+  };
 
   return (
     <div className="todo-list">
@@ -36,8 +53,14 @@ const TodoList = () => {
                 placeholder="search"
                 aria-label=""
                 aria-describedby=""
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
-              <Button variant="outline-secondary" id="button-addon2">
+              <Button
+                variant="outline-secondary"
+                id="button-addon2"
+                onClick={searchTodo}
+              >
                 <Search />
               </Button>
             </InputGroup>
@@ -53,6 +76,16 @@ const TodoList = () => {
               <option value="deleted">Deleted</option>
             </Form.Select>
           </div>
+        </div>
+        <div className="filtered">
+          {/* { filteredTodo.map((task)=>(
+          <Message
+          id={task.id}
+          key={task.id}
+          title={task.data.title}
+          description={task.data.description}
+        ></Message>
+        ))} */}
         </div>
         <div className="message-box">
           {tasks.map((task) => (
