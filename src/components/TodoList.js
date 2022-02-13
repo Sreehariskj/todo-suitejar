@@ -1,14 +1,30 @@
-import React from "react";
-import {
-  Button,
-  Form,
-  FormControl,
-  InputGroup,
-} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import Message from "./Message";
 import { Search } from "@material-ui/icons/";
+import { db } from "../Firebase/firebase";
+import { useAuthContext } from "../store/AuthContext";
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 
 const TodoList = () => {
+  const [tasks, setTasks] = useState([]);
+  const { userId } = useAuthContext();
+  useEffect(() => {
+    // console.log("todo list", userId);
+
+    // -- retreive all data in firestore
+    const q = query(collection(db, "tasks"), orderBy("created", "desc"));
+    onSnapshot(q, (querySnapshot) =>
+      setTasks(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      )
+    );
+    // console.log('todo :',tasks);
+  }, [userId]);
+
   return (
     <div className="todo-list">
       <div className="list-container">
@@ -39,9 +55,14 @@ const TodoList = () => {
           </div>
         </div>
         <div className="message-box">
-          <Message></Message>
-          <Message></Message>
-          <Message></Message>
+          {tasks.map((task) => (
+            <Message
+              id={task.id}
+              key={task.id}
+              title={task.data.title}
+              description={task.data.description}
+            ></Message>
+          ))}
         </div>
       </div>
     </div>
