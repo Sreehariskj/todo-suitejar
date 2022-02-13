@@ -4,6 +4,27 @@ body {
   box-sizing: border-box;
 }
 
+/* bootstrap style*/
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+.dropdown-toggle::after {
+  display: none !important; 
+}
+
 /* -- LoginLeftSection -- */
 
 .login-container {
@@ -26,17 +47,71 @@ body {
   /* background-color: red; */
 }
 .google-img {
-  background: #ffffff;
+  background: #fff;
   border-radius: 5px;
   margin-right: 20px;
 }
 .google-text {
   font-size: 18px;
 }
+
+/* -- Todo -- */
+.todo {
+  width: 100%;
+  height: 100vh;
+  /* background-color: red; */
+}
+
+.todo .todo-container {
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: yellow; */
+}
+
+.todo-container .todo-card {
+  width: 70%;
+}
+.todo-container .todo-card h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+.message-box {
+  margin: 6em 0;
+}
+
+/* -- Message -- */
+
+.message .message-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 1em 0;
+  /* background-color: red; */
+}
+
+/* -- PageSeparator */
+.page-separator {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+.vertical-line {
+  height: 90%;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
 /* for small device */
 
 @media (max-width: 770px) {
   .login-container {
     justify-content: center;
+  }
+  .page-separator {
+    display: none;
   }
 }
