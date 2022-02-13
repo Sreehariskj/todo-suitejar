@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../Firebase/firebase";
+import { auth, db } from "../Firebase/firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { useAuthContext } from "../store/AuthContext";
 import Logo from "./Logo";
 
@@ -10,14 +11,38 @@ const Todo = () => {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const { userId, setUserId } = useAuthContext();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   useEffect(() => {
     // console.log('userid',userId);
 
-    // redirect to login if not user
+    // -- redirect to login if not user --
     if (!user) return navigate("/login");
 
     setUserId(user?.uid);
   }, [user, navigate, setUserId]);
+
+  // -- function to add new todo to firestore --
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, "tasks"), {
+        title: title,
+        description: description,
+        uid: userId,
+        completed: false,
+        favourite: false,
+        deleted: false,
+        created: Timestamp.now(),
+      });
+      setTitle("");
+      setDescription("");
+      // onClose()
+    } catch (err) {
+      alert(err);
+    }
+  };
   return (
     <div className="todo">
       <Logo></Logo>
@@ -32,14 +57,26 @@ const Todo = () => {
               feugiat vitae faucibus nibh dolor dui.
             </p>
           </div>
-          <Form className="">
+          <Form className="" onSubmit={handleSubmit}>
             <Form.Group className="mb-3 w-75 mx-auto" controlId="">
-              <Form.Control type="text" placeholder="Title" />
+              <Form.Control
+                required
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </Form.Group>
             <Form.Group className="mb-3 w-75 mx-auto" controlId="">
-              <Form.Control type="text" placeholder="Description" />
+              <Form.Control
+                required
+                type="text"
+                value={description}
+                placeholder="Description"
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </Form.Group>
-            <Button variant="primary" className="mb-3 w-50">
+            <Button type="submit" variant="primary" className="mb-3 w-50">
               Add
             </Button>
           </Form>
