@@ -46,9 +46,9 @@ const TodoList = () => {
     <div className="todo-list">
       <div className="list-container">
         <h1 className="my-5">Todolist</h1>
-        <div className="sort-box d-flex justify-content-between">
-          <div className="search-field">
-            <InputGroup className="mb-3">
+        <div className="sort-box d-flex justify-content-between align-items-center">
+          <div className="search-field w-50">
+            <InputGroup className="">
               <FormControl
                 placeholder="search"
                 aria-label=""
@@ -70,7 +70,9 @@ const TodoList = () => {
               aria-label="Default select example"
               className="shadow-none"
             >
-              <option>Filter By</option>
+              <option value="" disabled selected hidden>
+                Filter By
+              </option>
               <option value="completed">Completed</option>
               <option value="favourite">Favourite</option>
               <option value="deleted">Deleted</option>
