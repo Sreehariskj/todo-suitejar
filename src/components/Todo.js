@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../Firebase/firebase";
+import { useAuthContext } from "../store/AuthContext";
 import Logo from "./Logo";
 
 const Todo = () => {
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+  const { userId, setUserId } = useAuthContext();
+  useEffect(() => {
+    // console.log('userid',userId);
+
+    // redirect to login if not user
+    if (!user) return navigate("/login");
+
+    setUserId(user?.uid);
+  }, [user, navigate, setUserId]);
   return (
     <div className="todo">
       <Logo></Logo>
