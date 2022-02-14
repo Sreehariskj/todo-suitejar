@@ -60,8 +60,8 @@ const TodoList = () => {
       setTasks(
         tasks.filter(
           (task) =>
-            task.data.title.toLowerCase().includes(search) ||
-            task.data.description.toLowerCase().includes(search)
+            task.data.title.toLowerCase().includes(search.toLowerCase()) ||
+            task.data.description.toLowerCase().includes(search.toLowerCase())
         )
       );
     }
@@ -94,6 +94,7 @@ const TodoList = () => {
             <Form.Select
               aria-label="Default select example"
               className="shadow-none"
+              value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value="" disabled selected hidden>
