@@ -4,7 +4,13 @@ import Message from "./Message";
 import { Search } from "@material-ui/icons/";
 import { db } from "../Firebase/firebase";
 import { useAuthContext } from "../store/AuthContext";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  where,
+} from "firebase/firestore";
 import { useTodoContext } from "../store/TodoContext";
 
 const TodoList = () => {
@@ -13,10 +19,14 @@ const TodoList = () => {
   const [search, setSearch] = useState();
   // const [filteredTodo, setFilteredTodo] = useState();
   useEffect(() => {
-    // console.log("todo list", userId);
+    // console.log("current user:", userId);
 
-    // -- retreive all data in firestore
-    const q = query(collection(db, "tasks"), orderBy("created", "desc"));
+    // -- retreive all user created tasks data in firestore
+    const q = query(
+      collection(db, "tasks"),
+      where("uid", "==", userId),
+      orderBy("created", "desc")
+    );
     onSnapshot(q, (querySnapshot) =>
       setTasks(
         querySnapshot.docs.map((doc) => ({
