@@ -17,6 +17,7 @@ const TodoList = () => {
   const { tasks, setTasks } = useTodoContext();
   const { userId } = useAuthContext();
   const [search, setSearch] = useState();
+  const [category, setCategory] = useState();
   // const [filteredTodo, setFilteredTodo] = useState();
   useEffect(() => {
     // console.log("current user:", userId);
@@ -35,9 +36,23 @@ const TodoList = () => {
         }))
       )
     );
-
-    // console.log('todo :',tasks);
   }, [userId, setTasks]);
+
+  useEffect(() => {
+    // -- add function for list category
+    if (category) {
+      // console.log("called category", category);
+      // setFilteredTodo(tasks);
+
+      setTasks(
+        tasks.filter((task) =>
+          task.data[category].toString().toLowerCase().includes("true")
+        )
+      );
+      // console.log(filteredTodo)
+      // setCategory(null)
+    }
+  }, [category]);
 
   // -- function to search task by title & description --
   const searchTodo = () => {
@@ -79,6 +94,7 @@ const TodoList = () => {
             <Form.Select
               aria-label="Default select example"
               className="shadow-none"
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option value="" disabled selected hidden>
                 Filter By
