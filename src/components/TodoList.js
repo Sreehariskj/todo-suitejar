@@ -93,7 +93,7 @@ const TodoList = () => {
 
   return (
     <div className="todo-list">
-      <div className="list-container">
+      <div className="list-container px-4">
         <div className="d-flex justify-content-between align-items-center my-5">
           <h1 className="">Todolist</h1>
           <Button variant="danger" onClick={logout}>
