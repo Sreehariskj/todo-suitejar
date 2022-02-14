@@ -16,9 +16,9 @@ import { useTodoContext } from "../store/TodoContext";
 const TodoList = () => {
   const { tasks, setTasks } = useTodoContext();
   const { userId } = useAuthContext();
-  const [search, setSearch] = useState();
-  const [category, setCategory] = useState();
-  // const [filteredTodo, setFilteredTodo] = useState();
+  const [search, setSearch] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [filteredTodo, setFilteredTodo] = useState(tasks);
   useEffect(() => {
     // console.log("current user:", userId);
 
@@ -40,11 +40,12 @@ const TodoList = () => {
 
   useEffect(() => {
     // -- add function for list category
+    setFilteredTodo(tasks);
     if (category) {
       // console.log("called category", category);
       // setFilteredTodo(tasks);
 
-      setTasks(
+      setFilteredTodo(
         tasks.filter((task) =>
           task.data[category].toString().toLowerCase().includes("true")
         )
@@ -56,8 +57,9 @@ const TodoList = () => {
 
   // -- function to search task by title & description --
   const searchTodo = () => {
+    setFilteredTodo(tasks);
     if (search) {
-      setTasks(
+      setFilteredTodo(
         tasks.filter(
           (task) =>
             task.data.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -106,18 +108,18 @@ const TodoList = () => {
             </Form.Select>
           </div>
         </div>
-        <div className="filtered">
-          {/* { filteredTodo.map((task)=>(
+        {/* <div className="filtered bg-success">
+          { filteredTodo.map((task)=>(
           <Message
           id={task.id}
           key={task.id}
           title={task.data.title}
           description={task.data.description}
         ></Message>
-        ))} */}
-        </div>
+        ))}
+        </div>  */}
         <div className="message-box">
-          {tasks.map((task) => (
+          {filteredTodo.map((task) => (
             <Message
               id={task.id}
               key={task.id}
