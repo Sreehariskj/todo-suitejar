@@ -52,7 +52,7 @@ const TodoList = () => {
       // console.log(filteredTodo)
       // setCategory(null)
     }
-  }, [category]);
+  }, [category, setTasks, tasks]);
 
   // -- function to search task by title & description --
   const searchTodo = () => {
