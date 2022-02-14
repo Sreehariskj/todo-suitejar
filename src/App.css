@@ -22,7 +22,7 @@ label:focus,
   box-shadow: none !important;
 }
 .dropdown-toggle::after {
-  display: none !important; 
+  display: none !important;
 }
 
 /* -- LoginLeftSection -- */
@@ -90,6 +90,10 @@ label:focus,
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   padding: 1em 0;
   /* background-color: red; */
+}
+.message .message-card .message-select {
+  width: 1.5em;
+  border: none;
 }
 
 /* -- PageSeparator */
