@@ -4,9 +4,9 @@ const TodoContext = createContext();
 export const useTodoContext = () => useContext(TodoContext);
 
 const TodoContextProvider = ({ children }) => {
-  const [tasks, setTasks] = useState([]);
+  const [allTasks, setAllTasks] = useState([]);
   return (
-    <TodoContext.Provider value={{ tasks, setTasks }}>
+    <TodoContext.Provider value={{ allTasks, setAllTasks }}>
       {children}
     </TodoContext.Provider>
   );

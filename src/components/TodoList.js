@@ -14,11 +14,13 @@ import {
 import { useTodoContext } from "../store/TodoContext";
 
 const TodoList = () => {
-  const { tasks, setTasks } = useTodoContext();
+  const { allTasks, setAllTasks } = useTodoContext();
   const { userId } = useAuthContext();
+  const [currentTask, setCurrentTask] = useState(allTasks);
   const [search, setSearch] = useState(null);
   const [category, setCategory] = useState(null);
-  const [filteredTodo, setFilteredTodo] = useState(tasks);
+  const [filteredTodo, setFilteredTodo] = useState(currentTask);
+
   useEffect(() => {
     // console.log("current user:", userId);
 
@@ -29,38 +31,58 @@ const TodoList = () => {
       orderBy("created", "desc")
     );
     onSnapshot(q, (querySnapshot) =>
-      setTasks(
+      setAllTasks(
         querySnapshot.docs.map((doc) => ({
           id: doc.id,
           data: doc.data(),
         }))
       )
     );
-  }, [userId, setTasks]);
+  }, [userId, setAllTasks]);
 
   useEffect(() => {
     // -- add function for list category
-    setFilteredTodo(tasks);
-    if (category) {
-      // console.log("called category", category);
+    setFilteredTodo(currentTask);
+    if (category && category !== "deleted") {
+      console.log("called category", category);
       // setFilteredTodo(tasks);
 
       setFilteredTodo(
-        tasks.filter((task) =>
+        currentTask.filter((task) =>
           task.data[category].toString().toLowerCase().includes("true")
         )
       );
       // console.log(filteredTodo)
       // setCategory(null)
     }
-  }, [category, setTasks, tasks]);
+    if (category === "deleted") {
+      // console.log("called category", category);
+      // setFilteredTodo(tasks);
+
+      setFilteredTodo(
+        allTasks.filter((task) =>
+          task.data.deleted.toString().toLowerCase().includes("true")
+        )
+      );
+      // console.log(filteredTodo)
+      // setCategory(null)
+    }
+  }, [category, setAllTasks, allTasks, currentTask]);
+
+  // -- function get current task --
+  useEffect(() => {
+    setCurrentTask(
+      allTasks.filter((task) => task.data.deleted.toString().includes("false"))
+    );
+    // console.log(currentTask)
+  }, [allTasks]);
 
   // -- function to search task by title & description --
   const searchTodo = () => {
-    setFilteredTodo(tasks);
+    setFilteredTodo(currentTask);
     if (search) {
       setFilteredTodo(
-        tasks.filter(
+        currentTask.filter(
           (task) =>
             task.data.title.toLowerCase().includes(search.toLowerCase()) ||
             task.data.description.toLowerCase().includes(search.toLowerCase())
@@ -113,16 +135,16 @@ const TodoList = () => {
             </Form.Select>
           </div>
         </div>
-        {/* <div className="filtered bg-success">
-          { filteredTodo.map((task)=>(
-          <Message
-          id={task.id}
-          key={task.id}
-          title={task.data.title}
-          description={task.data.description}
-        ></Message>
-        ))}
-        </div>  */}
+        <div className="filtered bg-success">
+          {/* {currentTask.map((task) => (
+            <Message
+              id={task.id}
+              key={task.id}
+              title={task.data.title}
+              description={task.data.description}
+            ></Message>
+          ))} */}
+        </div>
         <div className="message-box">
           {filteredTodo.map((task) => (
             <Message
@@ -133,6 +155,11 @@ const TodoList = () => {
             ></Message>
           ))}
         </div>
+        {filteredTodo.length === 0 && (
+          <div>
+            <h3 className="text-center text-secondary">Oops ! List is empty</h3>
+          </div>
+        )}
       </div>
     </div>
   );
