@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import Message from "./Message";
 import { Search } from "@material-ui/icons/";
-import { db } from "../Firebase/firebase";
+import { db, logout } from "../Firebase/firebase";
 import { useAuthContext } from "../store/AuthContext";
 import {
   collection,
@@ -72,7 +72,12 @@ const TodoList = () => {
   return (
     <div className="todo-list">
       <div className="list-container">
-        <h1 className="my-5">Todolist</h1>
+        <div className="d-flex justify-content-between align-items-center my-5">
+          <h1 className="">Todolist</h1>
+          <Button variant="danger" onClick={logout}>
+            logout
+          </Button>
+        </div>
         <div className="sort-box d-flex justify-content-between align-items-center">
           <div className="search-field w-50">
             <InputGroup className="">
