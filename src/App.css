@@ -35,23 +35,23 @@ label:focus,
   /* background-color: yellow; */
 }
 
-.login-form {
+.login-container .login-form {
   width: 70%;
   height: 50%;
   padding: 1rem;
   /* background-color: red; */
 }
-.google-btn {
+.login-container .login-form .google-btn {
   display: flex;
   align-items: center;
   /* background-color: red; */
 }
-.google-img {
+.login-form .google-btn .google-img {
   background: #fff;
   border-radius: 5px;
   margin-right: 20px;
 }
-.google-text {
+.login-form .google-btn .google-text {
   font-size: 18px;
 }
 
@@ -117,5 +117,11 @@ label:focus,
   }
   .page-separator {
     display: none;
+  }
+  .login-form .google-btn .google-text {
+    font-size: 14px;
+  }
+  .logo img {
+    height: 50px;
   }
 }
