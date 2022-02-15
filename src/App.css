@@ -95,7 +95,24 @@ label:focus,
   width: 1.5em;
   border: none;
 }
+.message .message-card .left-side {
+  max-width: 60%;
+  /* background-color: red; */
+}
+.message .message-card .right-side {
+  display: flex;
+  align-items: center;
+  /* background-color:red; */
+}
 
+.message .message-card .option {
+  margin-right: 5px;
+  /* background-color:yellow */
+}
+.message .message-card .option button:hover {
+  background-color: black;
+  color: #fff;
+}
 /* -- PageSeparator */
 .page-separator {
   height: 100vh;

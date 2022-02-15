@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 // import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { Form } from "react-bootstrap";
+import {
+  CheckCircleOutline,
+  DeleteOutline,
+  FavoriteBorder,
+} from "@material-ui/icons/";
+import { Button } from "react-bootstrap";
 import { db } from "../Firebase/firebase";
 import { doc, updateDoc } from "firebase/firestore";
 
@@ -17,7 +22,7 @@ const Message = ({ title, description, id }) => {
           await updateDoc(taskDocRef, {
             [select]: true,
           });
-          console.log("update");
+          // console.log("update");
         } catch (err) {
           alert(err);
         }
@@ -33,8 +38,35 @@ const Message = ({ title, description, id }) => {
           <h4>{title}</h4>
           <h5>{description}</h5>
         </div>
-        <div>
-          <Form.Select
+        <div className="right-side">
+          <div className="option">
+            <Button
+              variant="transparent"
+              size="sm"
+              onClick={() => setSelect("favourite")}
+            >
+              <FavoriteBorder />
+            </Button>
+          </div>
+          <div className="option">
+            <Button
+              variant="transparent"
+              size="sm"
+              onClick={() => setSelect("completed")}
+            >
+              <CheckCircleOutline />
+            </Button>
+          </div>
+          <div className="option">
+            <Button
+              variant="transparent"
+              size="sm"
+              onClick={() => setSelect("deleted")}
+            >
+              <DeleteOutline />
+            </Button>
+          </div>
+          {/* <Form.Select
             aria-label="Default select example"
             className=" message-select shadow-none"
             onChange={(e) => setSelect(e.target.value)}
@@ -45,7 +77,7 @@ const Message = ({ title, description, id }) => {
             <option value="completed">Completed</option>
             <option value="favourite">Favourite</option>
             <option value="deleted">Delete</option>
-          </Form.Select>
+          </Form.Select> */}
         </div>
       </div>
     </div>
