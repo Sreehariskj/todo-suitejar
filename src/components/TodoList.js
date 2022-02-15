@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import Message from "./Message";
-import { Search } from "@material-ui/icons/";
+import { ArrowBack, Search } from "@material-ui/icons/";
 import { db, logout } from "../Firebase/firebase";
 import { useAuthContext } from "../store/AuthContext";
 import {
@@ -18,6 +18,7 @@ const TodoList = () => {
   const { userId } = useAuthContext();
   const [currentTask, setCurrentTask] = useState(allTasks);
   const [search, setSearch] = useState(null);
+  const [searchValue, setSearchValue] = useState(null);
   const [category, setCategory] = useState(null);
   const [filteredTodo, setFilteredTodo] = useState(currentTask);
 
@@ -44,7 +45,7 @@ const TodoList = () => {
     // -- add function for list category
     setFilteredTodo(currentTask);
     if (category && category !== "deleted") {
-      console.log("called category", category);
+      // console.log("called category", category);
       // setFilteredTodo(tasks);
 
       setFilteredTodo(
@@ -79,6 +80,7 @@ const TodoList = () => {
 
   // -- function to search task by title & description --
   const searchTodo = () => {
+    setSearchValue(search);
     setFilteredTodo(currentTask);
     if (search) {
       setFilteredTodo(
@@ -91,6 +93,14 @@ const TodoList = () => {
     }
   };
 
+  // -- function to go back to list --
+  const backToList = () => {
+    setSearch("");
+    setSearchValue("");
+    setCategory("");
+    setFilteredTodo(currentTask);
+    // console.log('search is:',search);
+  };
   return (
     <div className="todo-list">
       <div className="list-container px-4">
@@ -135,17 +145,28 @@ const TodoList = () => {
             </Form.Select>
           </div>
         </div>
-        <div className="filtered bg-success">
-          {/* {currentTask.map((task) => (
+        {/* <div className="filtered bg-success">
+          {currentTask.map((task) => (
             <Message
-              id={task.id}
-              key={task.id}
-              title={task.data.title}
-              description={task.data.description}
+            id={task.id}
+            key={task.id}
+            title={task.data.title}
+            description={task.data.description}
             ></Message>
-          ))} */}
-        </div>
+          ))}
+        </div> */}
         <div className="message-box">
+          {searchValue || category ? (
+            <div className="d-flex align-items-center mb-5">
+              <Button variant="transparent" onClick={backToList}>
+                <ArrowBack fontSize="large" />
+              </Button>
+              <div className="d-flex align-items-center mx-auto">
+                <h2 className="mb-0 mx-2">Filter</h2>
+                {/* <Filter></Filter> */}
+              </div>
+            </div>
+          ) : null}
           {filteredTodo.map((task) => (
             <Message
               id={task.id}
