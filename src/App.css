@@ -28,7 +28,7 @@ label:focus,
 /* -- LoginLeftSection -- */
 
 .login-container {
-  height: 100vh;
+  height: 80vh;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -37,8 +37,8 @@ label:focus,
 
 .login-container .login-form {
   width: 70%;
-  height: 50%;
   padding: 1rem;
+  /* height: 50%; */
   /* background-color: red; */
 }
 .login-container .login-form .google-btn {
